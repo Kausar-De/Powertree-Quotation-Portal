@@ -1,0 +1,28 @@
+{% extends 'quoteform/base.html' %}
+{% block content %}
+{% load static %}
+{% include 'quoteform/navbar.html' %}
+
+<br>
+<div class="row" style="margin-left: 0.5%; margin-right: 0.5%;">
+    <div class="col-lg-12">
+        <div class="box-element">
+            <h2 style="text-align: center;">Quotes List</h2>  
+        </div>
+        <br>
+        <div class="box-element" style="text-align: center;">
+            <table class="table align-middle">
+                <tbody>
+                    {% for quote in quotes %}
+                    <tr>
+                        <th><a href="{% url 'quotedetail' pk=quote.pk %}">{{quote.name}}</a></th>
+                        <td>{{quote.created_date}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'quoteform/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="col" style="margin-left: 0.5%; margin-right: 0.5%;">
+    <div class="card card-body">
+        <h2>Login</h2>
+        <br>
+        <form method="POST">
+            <table class="table table-sm" style="margin-bottom: 0;">
+                {% csrf_token %}
+
+                <tr style="text-align: center;">
+                    <th>Username: <input type="text" name="username" placeholder="Username..."></th>
+                </tr>
+
+                <tr style="text-align: center;">
+                    <th>Password: <input type="password" name="password" placeholder="Password..."></th>
+                </tr>
+                
+                <tr style="text-align: center;">
+                    <th><input class="btn btn-success" type="submit" name="Homepage" value="Login"></th>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<br>
+
+{% for message in messages %}
+
+    <h6 style="text-align: center; color: red;">{{message}}</h6>
+
+{% endfor %}
+
+{% endblock content %}

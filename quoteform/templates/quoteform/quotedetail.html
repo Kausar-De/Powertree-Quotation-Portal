@@ -1,0 +1,535 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        body{
+            margin: 0%;
+            padding: 0%;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        p{
+            font-size: 13px;
+        }
+        table.table1, table.table2, table.table3{
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            background-color: white;
+        }
+        td.table1, th.table1 {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 0px;
+            font-size: 13px;
+        }
+        td.table1{
+            text-align: left;
+            padding-left: 15px;
+        }
+        td.table2, th.table2 {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 0%;
+            font-size: 13px;
+        }
+        td.table3, th.table3 {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 0px;
+            font-size: 9.5px;
+        }
+
+        
+        .flexbox{
+            display: flex;
+            justify-content: space-between;
+        }
+        .page{
+            height: 100vh;
+            display: block;
+            background-color: white;
+        }
+        .header{
+            height: fit-content;
+        }
+        .detail{
+            text-align: right;
+
+        }
+        .quatationdetail{
+            position: absolute;
+            right: 10px;
+            top: 0px;
+            color: #7d92a0;
+            font-size: medium; 
+            text-align: right;
+        }
+        
+        #image{
+            max-width: 45vw;
+        }
+        #pageBody{
+            position: relative;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="header">
+            <div class="flexbox">
+                <a href="http://powertree.co.in" target="_blank" rel="noopener noreferrer">
+                    <img id="image" src="./PowerTreeLogo.png">
+                </a>
+                <div class="detail">
+                    <span style="color: #27b67c; font-weight: bold;  font-size:medium;">IMAGINE POWERTREE PRIVATE LIMITED</span>
+                    <br>
+                    <span style="font-size: small;">Office No : 201, 202, 203</span>
+                    <br>
+                    <span style="font-size: small;">Swagat Rainforest 1</span>
+                    <br>
+                    <span style="font-size: small;">Kudasan, Gandhinagar</span>
+                    <br>
+                    <a href="mailto:powerup@poweertree.co.in" style="color: #e17423;">powerup@poweertree.co.in</a>
+                    <span style="font-size: small;">| M: +91 9586121111</span>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div id="pageBody">
+            <div class="quatationdetail" >
+                Quotation No : {{quote.pk}}
+                <br>Date : {{quote.created_date}}
+            </div>
+            <div class="letter">
+                <div style="font-weight: bold; margin-left: 35px; font-size: 13px;">
+                    <br><br><br><br>
+                    TO,<br>
+                    {{quote.name}} <br>
+                    $PLACE <br><br>
+                    <span style="font-weight: bolder; font-size: 17px;">SUBJECT : QUOTATION FOR SOLAR POWER SYSTEM</span>
+                </div>
+                <div style="margin-left: 35px; margin-right: 35px;">
+                    <p>
+                    Dear Sir/Ma'am,
+                    </p>
+                    <p>
+                    Greetings from Imagine Power tree Private Limited.
+                    </p>
+                    <p style="text-align: justify;">We are a Sustainable Technology Innovation Venture based out in Gandhinagar, Gujarat. We are
+recognized and Supported by PDEU Innovation and Incubation Centre, IC Department,
+Government of Gujarat, Cambridge Clean tech UK and Other reputed organization for create an
+Innovative Products like Solar Tree, Solar Powered EV Charging Stations and Others. We have filled 
+18+ Design Patents, received 10+ National and International Award and completed orders of more
+than 1 million USD in the period of four years</p>
+                        <p>
+                            We are pleased to submit our technical and financial proposal for the same.
+                        </p>
+                </div>
+                <div style="margin-left: 15px; margin-right: 35px;">
+                    <ul style="list-style: square;">
+                        <li style="font-weight: bold;">Solar Power Tree System</li>
+                    </ul>
+                </div>
+                <div style="margin-left: 55px; margin-right: 70px; ">
+                    <table class="table1">
+                        <tr>
+                                <th class="table2" class="table2" class="table1" width = "50"><strong>Sr.<br/>No</strong></th>
+                                <th class="table2" class="table1" width = "600" ><strong  style = "margin-top:0">Particulars</strong></th>
+                                <th class="table2" class="table1" width = "200" text-align = "left"><strong>Measurement<br/>Unit</strong></th>
+                                <th class="table2" class="table1" width = "150" text-align = "left"><strong>Total No.<br/>of unit</strong></th>
+                                <th class="table2" class="table1" width = "200" text-align = "left"><strong>Total Price (INR)</strong></th>
+                                                
+                        </tr>
+                            <tr height="22">
+                                <th class="table2" class="table1"><strong>1</strong></th>
+                                <td class="table1">{{quote.module}}</td>
+                                <td class="table1">kW</td>
+                                <td class="table1">{{quote.capacity}}</td>
+                                <td class="table1">{{quote.price}}</td>
+                                                
+                        </tr>
+                             <tr height="22">
+                                <th class="table2" class="table1"><strong>2</strong></th>
+                                <td class="table1"></td>
+                                <td class="table1"></td>
+                                <td class="table1"></td>
+                                <td class="table1"></td>
+                                                
+                        </tr>
+                             <tr height="22">
+                                <th class="table2" class="table1"><strong>3</strong></th>
+                                <td class="table1">A 45 meter AC cable will be supplied;
+                                    if more is required, a charge will be
+                                    Calculated.
+                                    </td>
+                                <td class="table1"></td>
+                                <td class="table1"></td>
+                                <td class="table1">As per Actual</td>
+                                                
+                        </tr>
+                             <tr height="22">
+                                <th class="table2" class="table1"><strong></strong></th>
+                                <td class="table1"><strong>Total</strong></td>
+                                <td class="table1"></td>
+                                <td class="table1"></td>
+                                <td class="table1">$total_final_price</td>
+                                                
+                        </tr>
+                    </table>
+                </div>
+                <div style="margin-left: 15px; margin-right: 35px;">
+                    <ul style="list-style: square;">
+                        <li style="font-weight: bold;">Payment Terms</li>
+                    </ul>
+                </div>
+                <div style="margin-left: 55px; margin-right: 70px; ">
+                    <table class="table2">
+                        <tr height="22">
+                                <th class="table2" class="table2" width = "50"><strong><center>Sr. No</center></strong></th>
+                                <th class="table2" class="table2" width = "300" ><strong  style = "margin-top:0"><center>Term<center></strong></th>
+                                <th class="table2" class="table2" width = "100"><strong><center>%Amount</center></strong></th>
+                                                
+                        </tr>
+                            <tr height="22">
+                                <th class="table2" class="table2"><strong><center>1</center></strong></th>
+                                <td class="table2"  style="text-align: left; padding-left: 10px;">Advance at the time of Order Confirmation</td>
+                                <td class="table2"><center>50%</center></td>
+                    
+                                                
+                        </tr>
+                             <tr height="22">
+                                <th class="table2" class="table2"><strong><center>2</center></strong></th>
+                                <td class="table2" style="text-align: left; padding-left: 10px;">After application</td>
+                                <td class="table2"><center>10%</center></td>
+                    
+                                                
+                        </tr>
+                             <tr height="22">
+                                <th class="table2" class="table2"><strong><center>3</center></strong></th>
+                                <td class="table2" style="text-align: left; padding-left: 10px;">Before Material Dispatch</td>
+                                <td class="table2"><center>40%</center></td>
+                    
+                                                
+                        </tr>
+                             <tr height="22">
+                                <th class="table2" class="table2" colspan = "2"><strong><center>Total</center></strong></th>
+                                <td class="table2"><center>100%</center></td>
+                                
+                          
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <span></span>
+    <div class="page">
+        <div class="header">
+            <div class="flexbox">
+                <a href="http://powertree.co.in" target="_blank" rel="noopener noreferrer">
+                    <img id="image" src="./PowerTreeLogo.png">
+                </a>
+                <div class="detail">
+                    <span style="color: #27b67c; font-weight: bold;  font-size:medium;">IMAGINE POWERTREE PRIVATE LIMITED</span>
+                    <br>
+                    <span style="font-size: small;">Office No : 201, 202, 203</span>
+                    <br>
+                    <span style="font-size: small;">Swagat Rainforest 1</span>
+                    <br>
+                    <span style="font-size: small;">Kudasan, Gandhinagar</span>
+                    <br>
+                    <a href="mailto:powerup@poweertree.co.in" style="color: #e17423;">powerup@poweertree.co.in</a>
+                    <span style="font-size: small;">| M: +91 9586121111</span>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="letter">
+            <div style="margin-left: 15px; margin-right: 35px;">
+                <ul style="list-style: square;">
+                    <li style="font-weight: bold;  font-size: 14px;">Power Make List</li>
+                </ul>
+            </div>
+            <div style="margin-left: 55px; margin-right: 70px; ">
+                <table class="table3" style="font-size: 15px;">
+                    <tr>
+                        <th class="table3" width = "50"><strong><center>Sr.<br/>No</center></strong></th>
+                        <th class="table3" width = "400" ><strong  style = "margin-top:0"><center>Particulars</center></strong></th>
+                        <th class="table3" width = "200" text align = "left"><strong><center>Specification</center></strong></th>
+                        <th class="table3" width = "300" text align = "left"><strong><center>Make</center></strong></th>
+                                        
+             </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>1</center></strong></td>
+                        <td class="table3"><center>Solar Panel </center></td>
+                        <td class="table3"><center>535/540Wp</center></td>
+                        <td class="table3"><center>{{quote.panel}}</center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>2</center></strong></td>
+                        <td class="table3"><center>Inverter </center></td>
+                        <td class="table3"><center>As Per Standard</center></td>
+                        <td class="table3"><center>{{quote.inverter}}</center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>3</center></strong></td>
+                        <td class="table3"><center>MS Pipe</center></td>
+                        <td class="table3"><center>50*50*2.0 mm </center></td>
+                        <td class="table3"><center>Ridhhi/Equivalent</center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>4</center></strong></td>
+                        <td class="table3"><center>MS Rail</center></td>
+                        <td class="table3"><center>40*40*2 mm </center></td>
+                        <td class="table3"><center>Ridhhi/Equivalent</center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>5</center></strong></td>
+                        <td class="table3"><center>DCDB</center></td>
+                        <td class="table3"><center>As Per Standard</center></td>
+                        <td class="table3"><center>Schneider/L&T</center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>6</center></strong></td>
+                        <td class="table3"><center>ACDB</center></td>
+                        <td class="table3"><center>As Per Standard</center></td>
+                        <td class="table3"><center>Schneider/L&T
+            </center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>7</center></strong></td>
+                        <td class="table3"><center>DC Cable</center></td>
+                        <td class="table3"><center>XLPE</center></td>
+                        <td class="table3"><center>Polycab/ Havells/RR Cabels</center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>8</center></strong></td>
+                        <td class="table3"><center>AC Cable</center></td>
+                        <td class="table3"><center>XLPE</center></td>
+                        <td class="table3"><center>Polycab/ Havells/RR Cabels
+            </center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>9</center></strong></td>
+                        <td class="table3"><center>Earthing cable</center></td>
+                        <td class="table3"><center>XLPE</center></td>
+                        <td class="table3"><center>Polycab/ Havells/RR Cabels
+            </center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>10</center></strong></td>
+                        <td class="table3"><center>Lighting arrester </center></td>
+                        <td class="table3"><center>As per Standard </center></td>
+                        <td class="table3"><center>ZKER/GMAX/Equivalent</center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>11</center></strong></td>
+                        <td class="table3"><center>Earthing rod with clamp and
+            Lighting Arrester</center></td>
+                        <td class="table3"><center>As per Standard</center></td>
+                        <td class="table3"><center>ZKER/GMAX/Equivalent</center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>12</center></strong></td>
+                        <td class="table3"><center>Backfill compound bag smart
+            (chemical bag)
+            </center></td>
+                        <td class="table3"><center>As per Standard</center></td>
+                        <td class="table3"><center>Onxy/True power/Equivalent</center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>13</center></strong></td>
+                        <td class="table3"><center>Anchor fastener</center></td>
+                        <td class="table3"><center>As per Standard</center></td>
+                        <td class="table3"><center>FF/Hania/Equivalent</center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>14</center></strong></td>
+                        <td class="table3"><center>Mc-4 connector</center></td>
+                        <td class="table3"><center>As per Standard</center></td>
+                        <td class="table3"><center>Reoo/Leader</center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>15</center></strong></td>
+                        <td class="table3"><center>Upvc plain end conduit pipes</center></td>
+                        <td class="table3"><center>As per Standard</center></td>
+                        <td class="table3"><center>Astral/Finolex/Prince</center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>16</center></strong></td>
+                        <td class="table3"><center>Jointer</center></td>
+                        <td class="table3"><center>As per Standard</center></td>
+                        <td class="table3"><center>Astral/Finolex/Prince</center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>17</center></strong></td>
+                        <td class="table3"><center>Round elbow</center></td>
+                        <td class="table3"><center>As per Standard</center></td>
+                        <td class="table3"><center>Astral/Finolex/Prince</center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>18</center></strong></td>
+                        <td class="table3"><center>Round tee</center></td>
+                        <td class="table3"><center>As per Standard</center></td>
+                        <td class="table3"><center>Astral/Finolex/Prince</center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>19</center></strong></td>
+                        <td class="table3"><center>Mid clamp</center></td>
+                        <td class="table3"><center>As per Standard</center></td>
+                        <td class="table3"><center>Astral/Finolex/Prince</center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>20</center></strong></td>
+                        <td class="table3"><center>China clamp 25mm</center></td>
+                        <td class="table3"><center>As per Standard</center></td>
+                        <td class="table3"><center>Astral/Finolex/Prince</center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>21</center></strong></td>
+                        <td class="table3"><center>Cable Tie </center></td>
+                        <td class="table3"><center>As per Standard</center></td>
+                        <td class="table3"><center>Astral/Finolex/Prince</center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>22</center></strong></td>
+                        <td class="table3"><center>Pvc insulation tape white color</center></td>
+                        <td class="table3"><center>As per Standard</center></td>
+                        <td class="table3"><center>Astral/Finolex/Prince</center></td>
+                                        
+                </tr>
+                 </tr>
+                     <tr height="22">
+                        <td class="table3"><strong><center>23</center></strong></td>
+                        <td class="table3"><center>Zinc spray</center></td>
+                        <td class="table3"><center></center></td>
+                        <td class="table3"><center>3M/Wiko/Equivalent</center></td>
+                                        
+                </tr>
+                </table>
+            </div>
+            <div>
+                <br>
+                <span style="margin-left: 55px; font-weight: bold; font-size: 14px;">Environmental Savings:</span><br><br>
+                <span style="margin-left: 55px; font-weight: bold; font-size: 12px;">Tariff @ Rs.8/ kWh (for top slab of traffic) - No increase assumed over 25 years: </span>
+                <br>
+                <span style="margin-left: 100px; font-weight: bold; font-size: 12px;">Monthly:  Rs. 4000</span>
+                <br>
+                <span style="margin-left: 100px; font-weight: bold; font-size: 12px;">Annually: Rs. 48000 </span>
+                <br>
+                <span style="margin-left: 100px; font-weight: bold; font-size: 12px;">Life-Time (25 years): Rs. 1200000 </span>
+                <br>
+                <br>
+                <div style="margin-right: 70px; margin-left: 55px;">
+                    <table class="table3">
+                        <tr>
+                            <th class="table2" style="font-size: 11px;">Carbon dioxide emissions mitigated is </th>
+                            <td class="table2" style="font-size: 11px;">123 tonnes...</td>
+                        </tr>
+                        <tr>
+                            <th class="table2" style="font-size: 11px;">This installation will be equivalent to planting</th>
+                            <td class="table2" style="font-size: 11px;">197 Teak trees over the life time. (Data from IISc)</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<!--<br>
+<div id = "a4" class="row" style="margin-left: 0.5%; margin-right: 0.5%;">
+    <div class="col-lg-12">
+        <div class="box-element" style="text-align: center;">
+            <table class="table align-middle">
+                <tbody>
+                    <tr>
+                        <th>Customer Name</th>
+                        <td>{{quote.name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Customer WhatsApp No.</th>
+                        <td>{{quote.whatsapp}}</td>
+                    </tr>
+                    <tr>
+                        <th>Capacity (in kW)</th>
+                        <td>{{quote.capacity}}</td>
+                    </tr>
+                    <tr>
+                        <th>Module</th>
+                        <td>{{quote.module}}</td>
+                    </tr>
+                    <tr>
+                        <th>Solar Panel Make Selection</th>
+                        <td>{{quote.panel}}</td>
+                    </tr>
+                    <tr>
+                        <th>Inverter Make Selection</th>
+                        <td>{{quote.inverter}}</td>
+                    </tr>
+                    <tr>
+                        <th>Price (in INR)</th>
+                        <td>{{quote.price}}</td>
+                    </tr>
+                    <tr>
+                        <th>Revision</th>
+                        <td>{{quote.revision}}</td>
+                    </tr>
+                    <tr>
+                        <th>Date Created</th>
+                        <td>{{quote.created_date}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>-->
