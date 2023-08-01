@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-bxw*alx)41p%b@6vp5-ml+cr&inrjjtqnlajq2_d2%p84v%jva
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['localhost', 'powertree.pythonanywhere.com']
 
 
 # Application definition
