@@ -56,10 +56,10 @@ def quoteDetail(request, pk):
 
     context = {'quote': quote}
 
-    #pdfpath = str(settings.BASE_DIR) + '\static\pdf\TestPDF.pdf'
+    pdfpath = str(settings.BASE_DIR) + '\static\pdf\TestPDF.pdf'
 
-    #print(pdfpath)
+    print(pdfpath)
 
-    #converter.convert('https://www.wbkidsgo.com/en/tom-and-jerry', pdfpath)
+    converter.convert(request.build_absolute_uri(), pdfpath)
 
     return render(request, 'quoteform/quotedetail.html', context)
