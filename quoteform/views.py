@@ -47,7 +47,7 @@ def quoteForm(request):
         form = QuoteForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('quoteform')
+            return redirect('quotelist')
 
     context = {'form': form}
     
