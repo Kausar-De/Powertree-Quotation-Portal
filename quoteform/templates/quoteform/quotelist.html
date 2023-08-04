@@ -13,10 +13,18 @@
         <div class="box-element" style="text-align: center;">
             <table class="table align-middle">
                 <tbody>
+                    <tr>
+                        <th>Quotation Number</th>
+                        <th>Client Name</th>
+                        <th>Date Created</th>
+                        <th></th>
+                    </tr>
                     {% for quote in quotes %}
                     <tr>
-                        <th><a href="{% url 'quotedetail' pk=quote.pk %}">{{quote.name}}</a></th>
+                        <td><a href="{% url 'quotedetail' pk=quote.pk %}">{{quote.id}}</a></td>
+                        <td>{{quote.name}}</td>
                         <td>{{quote.created_date}}</td>
+                        <td><a style="text-decoration: none; color: white;" href="{% url 'renderpdf' pk=quote.pk %}"><button class="btn btn-success">Render PDF</button></a></td>
                     </tr>
                     {% endfor %}
                 </tbody>

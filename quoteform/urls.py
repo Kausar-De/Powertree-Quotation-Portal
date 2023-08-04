@@ -8,4 +8,5 @@ urlpatterns = [
     path('', views.quoteForm, name = "quoteform"),
     path('quotelist/', views.quoteList, name = "quotelist"),
     path('quotedetail/<int:pk>/', views.quoteDetail, name='quotedetail'),
+    path('renderpdf/<int:pk>/', views.renderPDF, name='renderpdf'),   
 ]
