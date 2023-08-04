@@ -73,104 +73,104 @@ def quoteDetail(request, pk):
 def renderPDF(request, pk):
     quote = get_object_or_404(QuoteDetails, pk = pk)
 
-    pdfpath = str(settings.BASE_DIR) + "\static\pdf"
+    pdfpath = str(settings.BASE_DIR) + "/static/pdf"
 
-    if os.path.exists(pdfpath + "\Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf"):
-        os.remove(pdfpath + "\Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf")
-    else:
-        #Page 2
-        packet = io.BytesIO()
-        can = canvas.Canvas(packet, pagesize=letter)
-        can.setFillColorRGB(0, 0, 0)
-        can.setFont("Times-Roman", 15)
-        can.drawString(470.4, 665, str(quote.pk))
-        can.drawString(470.4, 647, str(quote.created_date.date()))
-        can.drawString(30.4, 580, quote.name)
-        can.drawString(30.4, 565, "Placeholder")
+    if os.path.exists(pdfpath + "/Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf"):
+        os.remove(pdfpath + "/Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf")
 
-        can.save()
+    #Page 2
+    packet = io.BytesIO()
+    can = canvas.Canvas(packet, pagesize=letter)
+    can.setFillColorRGB(0, 0, 0)
+    can.setFont("Times-Roman", 15)
+    can.drawString(470.4, 665, str(quote.pk))
+    can.drawString(470.4, 647, str(quote.created_date.date()))
+    can.drawString(30.4, 580, quote.name)
+    can.drawString(30.4, 565, "Placeholder")
 
-        packet.seek(0)
-        new_pdf = PdfReader(packet)
+    can.save()
 
-        existing_pdf = PdfReader(open(pdfpath + "\PowerTreeQuotation.pdf", "rb"))
-        output = PdfWriter()
+    packet.seek(0)
+    new_pdf = PdfReader(packet)
 
-        page = existing_pdf.pages[1]
-        page.merge_page(new_pdf.pages[0])
-        output.add_page(page)
-        outputStream = open(pdfpath + "\P2.pdf", "wb")
-        output.write(outputStream)
-        outputStream.close()
+    existing_pdf = PdfReader(open(pdfpath + "/PowerTreeQuotation.pdf", "rb"))
+    output = PdfWriter()
 
-        #Page 3
-        packet = io.BytesIO()
-        can = canvas.Canvas(packet, pagesize=letter)
-        can.setFillColorRGB(0, 0, 0)
-        can.setFont("Times-Roman", 13)
-        can.drawString(79.5, 485, quote.module)
-        can.drawString(390, 485, str(quote.capacity))
-        can.drawString(468, 485, str(quote.price))
-        can.drawString(468, 307, "Placeholder")
-        can.save()
+    page = existing_pdf.pages[1]
+    page.merge_page(new_pdf.pages[0])
+    output.add_page(page)
+    outputStream = open(pdfpath + "/P2.pdf", "wb")
+    output.write(outputStream)
+    outputStream.close()
 
-        packet.seek(0)
-        new_pdf = PdfReader(packet)
+    #Page 3
+    packet = io.BytesIO()
+    can = canvas.Canvas(packet, pagesize=letter)
+    can.setFillColorRGB(0, 0, 0)
+    can.setFont("Times-Roman", 13)
+    can.drawString(79.5, 485, quote.module)
+    can.drawString(390, 485, str(quote.capacity))
+    can.drawString(468, 485, str(quote.price))
+    can.drawString(468, 307, "Placeholder")
+    can.save()
 
-        existing_pdf = PdfReader(open(pdfpath + "\PowerTreeQuotation.pdf", "rb"))
-        output = PdfWriter()
+    packet.seek(0)
+    new_pdf = PdfReader(packet)
 
-        page = existing_pdf.pages[2]
-        page.merge_page(new_pdf.pages[0])
-        output.add_page(page)
-        outputStream = open(pdfpath + "\P3.pdf", "wb")
-        output.write(outputStream)
-        outputStream.close()
+    existing_pdf = PdfReader(open(pdfpath + "/PowerTreeQuotation.pdf", "rb"))
+    output = PdfWriter()
 
-        #Page 3
-        packet = io.BytesIO()
-        can = canvas.Canvas(packet, pagesize=letter)
-        can.setFillColorRGB(0, 0, 0)
-        can.setFont("Times-Roman", 13)
-        can.drawString(427.4, 575, "/".join(quote.panel))
-        can.drawString(427.4, 543, "/".join(quote.inverter))
-        can.save()
+    page = existing_pdf.pages[2]
+    page.merge_page(new_pdf.pages[0])
+    output.add_page(page)
+    outputStream = open(pdfpath + "/P3.pdf", "wb")
+    output.write(outputStream)
+    outputStream.close()
 
-        packet.seek(0)
-        new_pdf = PdfReader(packet)
+    #Page 3
+    packet = io.BytesIO()
+    can = canvas.Canvas(packet, pagesize=letter)
+    can.setFillColorRGB(0, 0, 0)
+    can.setFont("Times-Roman", 13)
+    can.drawString(427.4, 575, "/".join(quote.panel))
+    can.drawString(427.4, 543, "/".join(quote.inverter))
+    can.save()
 
-        existing_pdf = PdfReader(open(pdfpath + "\PowerTreeQuotation.pdf", "rb"))
-        output = PdfWriter()
+    packet.seek(0)
+    new_pdf = PdfReader(packet)
 
-        page = existing_pdf.pages[4]
-        page.merge_page(new_pdf.pages[0])
-        output.add_page(page)
-        outputStream = open(pdfpath + "\P5.pdf", "wb")
-        output.write(outputStream)
-        outputStream.close()
+    existing_pdf = PdfReader(open(pdfpath + "/PowerTreeQuotation.pdf", "rb"))
+    output = PdfWriter()
 
-        #Create an instance of PdfFileMerger() class
-        merger = PdfMerger()
+    page = existing_pdf.pages[4]
+    page.merge_page(new_pdf.pages[0])
+    output.add_page(page)
+    outputStream = open(pdfpath + "/P5.pdf", "wb")
+    output.write(outputStream)
+    outputStream.close()
 
-        #Create a list with the file paths
-        pdf_files = [pdfpath + "\P1.pdf", pdfpath + "\P2.pdf", pdfpath + "\P3.pdf", pdfpath + "\P4.pdf" , pdfpath + "\P5.pdf" , pdfpath + "\P6.pdf"]
+    #Create an instance of PdfFileMerger() class
+    merger = PdfMerger()
 
-        #Iterate over the list of the file paths
-        for pdf_file in pdf_files:
-            #Append PDF files
-            merger.append(pdf_file)
+    #Create a list with the file paths
+    pdf_files = [pdfpath + "/P1.pdf", pdfpath + "/P2.pdf", pdfpath + "/P3.pdf", pdfpath + "/P4.pdf" , pdfpath + "/P5.pdf" , pdfpath + "/P6.pdf"]
 
-        #Write out the merged PDF file
-        merger.write(pdfpath + "\Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf")
-        merger.close()
+    #Iterate over the list of the file paths
+    for pdf_file in pdf_files:
+        #Append PDF files
+        merger.append(pdf_file)
 
-        if os.path.exists(pdfpath + "\P2.pdf"):
-            os.remove(pdfpath + "\P2.pdf")
+    #Write out the merged PDF file
+    merger.write(pdfpath + "/Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf")
+    merger.close()
 
-        if os.path.exists(pdfpath + "\P3.pdf"):
-            os.remove(pdfpath + "\P3.pdf")  
+    if os.path.exists(pdfpath + "/P2.pdf"):
+        os.remove(pdfpath + "/P2.pdf")
 
-        if os.path.exists(pdfpath + "\P5.pdf"):
-            os.remove(pdfpath + "\P5.pdf")         
+    if os.path.exists(pdfpath + "/P3.pdf"):
+        os.remove(pdfpath + "/P3.pdf")  
 
-    return FileResponse(open(pdfpath + "\Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf", "rb"))
+    if os.path.exists(pdfpath + "/P5.pdf"):
+        os.remove(pdfpath + "/P5.pdf")         
+
+    return FileResponse(open(pdfpath + "/Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf", "rb"))
