@@ -31,6 +31,8 @@ class QuoteDetails(models.Model):
 
     name = models.CharField(max_length = 500, null = True)
     whatsapp = models.CharField(max_length = 15, null = True)
+    location = models.CharField(max_length = 100, null = True)
+    email = models.CharField(max_length = 100, null = True)
     capacity = models.IntegerField(null = True)
     module = models.TextField(max_length = 20, choices = MODULES, default = 'Choose Module...')
     panel = MultiSelectField(choices = PANELS, max_choices = 4, max_length = 100)

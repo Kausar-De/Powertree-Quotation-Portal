@@ -9,6 +9,8 @@ class QuoteForm(ModelForm):
         labels = {
             'name': _('Customer Name'),
             'whatsapp': _('Customer WhatsApp No.'),
+            'location': _('Customer Location'),
+            'email': _('Customer Email ID'),
             'capacity': _('Capacity (in kW)'),
             'panel': _('Solar Panel Make Selection'),
             'inverter': _('Inverter Make Selection'),

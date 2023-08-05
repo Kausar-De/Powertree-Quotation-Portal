@@ -3,16 +3,19 @@ import io, os
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
+from django.core.mail import EmailMessage
 from django.contrib import messages
 from .forms import QuoteForm
 from .models import QuoteDetails
 from django.conf import settings
 
+from django.template.loader import render_to_string, get_template
+from django.utils.html import strip_tags
+
 from PyPDF2 import PdfWriter, PdfReader, PdfMerger
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
-from django.http import FileResponse
 
 # Create your views here.
 
@@ -75,9 +78,6 @@ def renderPDF(request, pk):
 
     pdfpath = str(settings.BASE_DIR) + "/static/pdf"
 
-    if os.path.exists(pdfpath + "/Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf"):
-        os.remove(pdfpath + "/Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf")
-
     #Page 2
     packet = io.BytesIO()
     can = canvas.Canvas(packet, pagesize=letter)
@@ -86,7 +86,7 @@ def renderPDF(request, pk):
     can.drawString(470.4, 665, str(quote.pk))
     can.drawString(470.4, 647, str(quote.created_date.date()))
     can.drawString(30.4, 580, quote.name)
-    can.drawString(30.4, 565, "Placeholder")
+    can.drawString(30.4, 565, quote.location)
 
     can.save()
 
@@ -111,7 +111,7 @@ def renderPDF(request, pk):
     can.drawString(79.5, 485, quote.module)
     can.drawString(390, 485, str(quote.capacity))
     can.drawString(468, 485, str(quote.price))
-    can.drawString(468, 307, "Placeholder")
+    can.drawString(468, 307, str(quote.price))
     can.save()
 
     packet.seek(0)
@@ -164,6 +164,8 @@ def renderPDF(request, pk):
     merger.write(pdfpath + "/Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf")
     merger.close()
 
+    quotepath = "/pdf/Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf"
+
     if os.path.exists(pdfpath + "/P2.pdf"):
         os.remove(pdfpath + "/P2.pdf")
 
@@ -173,4 +175,30 @@ def renderPDF(request, pk):
     if os.path.exists(pdfpath + "/P5.pdf"):
         os.remove(pdfpath + "/P5.pdf")         
 
-    return FileResponse(open(pdfpath + "/Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf", "rb"))
+    context = {'quote': quote, 'quotepath': quotepath}
+
+    return render(request, 'quoteform/renderedpdf.html', context)
+
+def sendMail(request, pk):
+    quote = get_object_or_404(QuoteDetails, pk = pk)
+    username = quote.name
+    to_email = quote.email
+
+    pdfpath = str(settings.BASE_DIR) + "/static/pdf"
+
+    template = get_template("quoteform/emailtemplate.html")
+    mailbody = template.render({'username': username})
+
+    email = EmailMessage(
+        subject = "Imagine PowerTree Solar Panel Quotation",
+        body = mailbody,
+        from_email = settings.EMAIL_HOST_USER,
+        to = [to_email],
+    )
+    email.content_subtype = "html"
+
+    email.attach_file(pdfpath + "/Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf")
+
+    email.send()
+
+    return redirect('quoteform')
