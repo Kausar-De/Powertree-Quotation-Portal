@@ -201,4 +201,7 @@ def sendMail(request, pk):
 
     email.send()
 
+    if os.path.exists(pdfpath + "/Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf"):
+        os.remove(pdfpath + "/Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf")
+
     return redirect('quoteform')
