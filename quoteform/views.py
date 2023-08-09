@@ -104,6 +104,8 @@ def renderPDF(request, pk):
     outputStream.close()
 
     #Page 3
+    finalprice = (quote.price * ((100 - quote.discount) / 100)) + quote.additional
+
     packet = io.BytesIO()
     can = canvas.Canvas(packet, pagesize=letter)
     can.setFillColorRGB(0, 0, 0)
@@ -111,7 +113,12 @@ def renderPDF(request, pk):
     can.drawString(79.5, 485, quote.module)
     can.drawString(390, 485, str(quote.capacity))
     can.drawString(468, 485, str(quote.price))
-    can.drawString(468, 307, str(quote.price))
+    can.drawString(450, 307, str(quote.discount) + "%")
+    can.drawString(450, 255, str(quote.additional))
+    can.drawString(450, 195, str(finalprice))
+    can.setFillColorRGB(0, 0, 0)
+    can.setFont("Helvetica-Bold", 18)
+    can.drawString(75.4, 610, quote.treesystem)
     can.save()
 
     packet.seek(0)
@@ -127,13 +134,14 @@ def renderPDF(request, pk):
     output.write(outputStream)
     outputStream.close()
 
-    #Page 3
+    #Page 5
     packet = io.BytesIO()
     can = canvas.Canvas(packet, pagesize=letter)
     can.setFillColorRGB(0, 0, 0)
     can.setFont("Times-Roman", 13)
-    can.drawString(427.4, 575, "/".join(quote.panel))
-    can.drawString(427.4, 543, "/".join(quote.inverter))
+    can.drawString(269, 582, quote.module.split(" - ")[1])
+    can.drawString(415.4, 582, "/".join(quote.panel))
+    can.drawString(415.4, 549, "/".join(quote.inverter))
     can.save()
 
     packet.seek(0)
@@ -149,11 +157,44 @@ def renderPDF(request, pk):
     output.write(outputStream)
     outputStream.close()
 
+    #Page 6
+
+    monthly = quote.capacity * 1000
+    yearly = monthly * 12
+    lifetime = yearly * 30
+    carbon = quote.capacity * 30.75
+    teak = quote.capacity * 40.2
+
+    packet = io.BytesIO()
+    can = canvas.Canvas(packet, pagesize=letter)
+    can.setFillColorRGB(0, 0, 0)
+    can.setFont("Times-Roman", 13)
+    can.drawString(184, 226.5, str(int(monthly)))
+    can.drawString(186, 210.5, str(int(yearly)))
+    can.drawString(245, 195, str(int(lifetime)))
+    can.drawString(290, 164.5, str(int(carbon)))
+    can.drawString(327.5, 133, str(int(teak)))
+    can.save()
+
+    packet.seek(0)
+    new_pdf = PdfReader(packet)
+
+    existing_pdf = PdfReader(open(pdfpath + "/PowerTreeQuotation.pdf", "rb"))
+    output = PdfWriter()
+
+
+    page = existing_pdf.pages[5]
+    page.merge_page(new_pdf.pages[0])
+    output.add_page(page)
+    outputStream = open(pdfpath + "/P6.pdf", "wb")
+    output.write(outputStream)
+    outputStream.close()
+
     #Create an instance of PdfFileMerger() class
     merger = PdfMerger()
 
     #Create a list with the file paths
-    pdf_files = [pdfpath + "/P1.pdf", pdfpath + "/P2.pdf", pdfpath + "/P3.pdf", pdfpath + "/P4.pdf" , pdfpath + "/P5.pdf" , pdfpath + "/P6.pdf"]
+    pdf_files = [pdfpath + "/P1.pdf", pdfpath + "/P2.pdf", pdfpath + "/P3.pdf", pdfpath + "/P4.pdf" , pdfpath + "/P5.pdf" , pdfpath + "/P6.pdf", pdfpath + "/P7.pdf"]
 
     #Iterate over the list of the file paths
     for pdf_file in pdf_files:
@@ -173,7 +214,10 @@ def renderPDF(request, pk):
         os.remove(pdfpath + "/P3.pdf")  
 
     if os.path.exists(pdfpath + "/P5.pdf"):
-        os.remove(pdfpath + "/P5.pdf")         
+        os.remove(pdfpath + "/P5.pdf")    
+
+    if os.path.exists(pdfpath + "/P6.pdf"):
+        os.remove(pdfpath + "/P6.pdf")        
 
     context = {'quote': quote, 'quotepath': quotepath}
 
@@ -181,27 +225,30 @@ def renderPDF(request, pk):
 
 def sendMail(request, pk):
     quote = get_object_or_404(QuoteDetails, pk = pk)
-    username = quote.name
-    to_email = quote.email
+    if quote.email is None:
+        return HttpResponse("This user does not have an email!")
+    else:
+        username = quote.name
+        to_email = quote.email
 
-    pdfpath = str(settings.BASE_DIR) + "/static/pdf"
+        pdfpath = str(settings.BASE_DIR) + "/static/pdf"
 
-    template = get_template("quoteform/emailtemplate.html")
-    mailbody = template.render({'username': username})
+        template = get_template("quoteform/emailtemplate.html")
+        mailbody = template.render({'username': username})
 
-    email = EmailMessage(
-        subject = "Imagine PowerTree Solar Panel Quotation",
-        body = mailbody,
-        from_email = settings.EMAIL_HOST_USER,
-        to = [to_email],
-    )
-    email.content_subtype = "html"
+        email = EmailMessage(
+            subject = "Imagine PowerTree Solar Panel Quotation",
+            body = mailbody,
+            from_email = settings.EMAIL_HOST_USER,
+            to = [to_email],
+        )
+        email.content_subtype = "html"
 
-    email.attach_file(pdfpath + "/Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf")
+        email.attach_file(pdfpath + "/Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf")
 
-    email.send()
+        email.send()
 
-    if os.path.exists(pdfpath + "/Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf"):
-        os.remove(pdfpath + "/Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf")
+        if os.path.exists(pdfpath + "/Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf"):
+            os.remove(pdfpath + "/Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf")
 
-    return redirect('quoteform')
+        return redirect('quoteform')
