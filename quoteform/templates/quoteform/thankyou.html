@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Imagine PowerTree Customer Care</title>
+<link rel="icon" type="image/x-icon" href="https://powertree.co.in/o/powertree-public-theme/images/favicon.ico?v2">
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+  .thank-you-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+  }
+  .icon {
+    font-size: 48px;
+    color: #ff9900;
+    margin-bottom: 10px;
+  }
+  @media only screen and (max-width: 600px) {
+  .thank-you-container {
+    width: 75vw;
+  }
+  }
+</style>
+</head>
+<body>
+{% csrf_token %}
+<div class="thank-you-container">
+  <div class="icon">&#10004;</div>
+  <h2>Thank You!</h2>
+  <p>Your complaint has been received.</p>
+  <p>We appreciate your input and will act upon it within the next 24 hours.</p>
+</div>
+</body>
+</html>

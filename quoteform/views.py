@@ -10,12 +10,15 @@ from .forms import QuoteForm
 from .models import QuoteDetails
 from django.conf import settings
 
-from django.template.loader import render_to_string, get_template
-from django.utils.html import strip_tags
+from django.template.loader import get_template
 
 from PyPDF2 import PdfWriter, PdfReader, PdfMerger
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
+
+import pandas as pd
+import time
+import datetime as dt
 
 # Create your views here.
 
@@ -252,3 +255,61 @@ def sendMail(request, pk):
             os.remove(pdfpath + "/Quotation No. " + str(quote.pk) + " for " + quote.name + ".pdf")
 
         return redirect('quoteform')
+    
+def customerHome(request):
+    return render(request, "quoteform/customercare.html")
+
+def customerForm(request):
+    return render(request, "quoteform/customerform.html")
+
+def thankYou(request):
+    csvpath = str(settings.BASE_DIR) + "/static/csv"
+
+    date = dt.date.today()
+    now = str(time.time())
+    name =  str(request.POST['name'])
+    compid = now + name.split(" ")[0]
+    number = str(request.POST['phone'])
+    address = str(request.POST['address'])
+    problem = str(request.POST['problem'])
+    PlantType = str(request.POST.get('plant_type'))
+    capacity = str(request.POST['capacity'])
+    email = str(request.POST['email'])
+    
+
+    df = pd.DataFrame([{
+        'ComplaintId' : compid,
+        'Date': date,
+        'Name': name,
+        'Capacity' : capacity,
+        'Address' : address,
+        'Problem' : problem,
+        'Number' : number,
+        'Email' : email,
+        'PlantType' : PlantType
+    }])
+
+    df.to_csv(csvpath + "/ComplaintDataBase.csv", mode = 'a', index = False, header = False)
+
+    template = get_template("quoteform/complainttemplate.html")
+    mailbody = template.render({'name': name, 'complaintid': compid, 'date': date, 'problem': problem})
+
+    email = EmailMessage(
+        subject = "Imagine PowerTree Complaint Received",
+        body = mailbody,
+        from_email = settings.EMAIL_HOST_USER,
+        to = [email],
+    )
+    email.content_subtype = "html"
+
+    email.send()
+
+    return render(request,'quoteform/thankyou.html')
+
+@login_required(login_url = 'login')
+def showCsv(request):
+
+    csvpath = str(settings.BASE_DIR) + "/static/csv"
+    df = pd.read_csv(csvpath + "/ComplaintDataBase.csv")
+    df.to_html(str(settings.BASE_DIR) + "/quoteform/templates/quoteform/showcsv.html")
+    return render(request, 'quoteform/showcsv.html')

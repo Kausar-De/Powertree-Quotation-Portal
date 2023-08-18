@@ -1,0 +1,46 @@
+{% load static %}
+
+<html>
+  <head>
+    <style>
+      p {
+        font-family: "Google Sans", Helvetica, Arial,
+          sans-serif;
+        font-size: 0.875rem;
+        text-align: justify;
+        text-indent: 3em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div
+      style="
+        position: relative;
+        max-width: 100%;
+        margin: auto;
+        padding: 10px;
+      "
+    >
+      
+      <div >
+        <a href="https://powertree.co.in/">
+          <img
+            style="max-width: 100%; min-width: 100%"
+            src="https://powertree.co.in/o/powertree-public-theme/images/new-Logo.png"
+          />
+        </a>
+      </div>
+      <p style="text-indent: 0em">Dear {{name}},</p>
+      <p>
+        This is to confirm that we have recieved your complaint ID "{{complaintid}}" dated {{date}} regarding the issue of "{{problem}}". Please allow us 24 hours to assess and fix the issue.
+      </p>
+      <p>
+        Note: Under O&M, you will only be charged if any parts need to be replaced.
+      </p>
+      <p>
+        We apologize for the inconvenience and thank you for your cooperation.
+      </p>
+    </div>
+  </body>
+</html>
