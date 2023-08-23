@@ -40,7 +40,7 @@ class QuoteDetails(models.Model):
     location = models.CharField(max_length = 100, null = True)
     email = models.CharField(max_length = 100, null = True, blank = True)
     treesystem = models.TextField(max_length = 50, choices = TREESYSTEMS, default = 'Choose Tree System...')
-    capacity = models.IntegerField(null = True)
+    capacity = models.FloatField(null = True)
     module = models.TextField(max_length = 50, choices = MODULES, default = 'Choose Module...')
     panel = MultiSelectField(choices = PANELS, max_choices = 4, max_length = 100)
     inverter = MultiSelectField(choices = INVERTERS, max_choices = 7, max_length = 100)

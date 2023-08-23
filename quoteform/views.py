@@ -107,7 +107,17 @@ def renderPDF(request, pk):
     outputStream.close()
 
     #Page 3
-    finalprice = (quote.price * ((100 - quote.discount) / 100)) + quote.additional
+    if quote.discount == None:
+        discount = 0
+    else:
+        discount = quote.discount
+
+    if quote.additional == None:
+        additional = 0
+    else:
+        additional = quote.additional
+
+    finalprice = (quote.price * ((100 - discount) / 100)) + additional
 
     packet = io.BytesIO()
     can = canvas.Canvas(packet, pagesize=letter)
