@@ -9,6 +9,7 @@ urlpatterns = [
     path('quotelist/', views.quoteList, name = "quotelist"),
     path('quotedetail/<int:pk>/', views.quoteDetail, name='quotedetail'),
     path('updatequote/<str:pk>', views.updateQuote, name = "updatequote"),
+    path('removequote/<str:pk>', views.removeQuote, name = "removequote"),
     path('showcsv/', views.showCsv, name = "showcsv"),
 
     path('renderpdf/<int:pk>/', views.renderPDF, name='renderpdf'),

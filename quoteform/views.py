@@ -99,6 +99,18 @@ def updateQuote(request, pk):
     return render(request, 'quoteform/quoteform.html', context)
 
 @login_required(login_url = 'login')
+def removeQuote(request, pk):
+    quote = QuoteDetails.objects.get(id = pk)
+
+    if request.method == 'POST':
+        quote.delete()
+        return redirect('/')
+    
+    context = {'quote': quote}
+    
+    return render(request, 'quoteform/removequote.html', context)
+
+@login_required(login_url = 'login')
 def renderPDF(request, pk):
     pdfpath = str(settings.BASE_DIR) + "/static/pdf"
     

@@ -56,7 +56,8 @@
                 </tbody>
             </table>
             <a style="text-decoration: none; color: white;" href="{% url 'renderpdf' pk=quote.pk %}"><button class="btn btn-success">Render PDF</button></a>
-            <a style="text-decoration: none; color: white;" href="{% url 'updatequote' pk=quote.pk %}"><button class="btn btn-success">Edit Details</button></a>
+            <a style="text-decoration: none; color: white;" href="{% url 'updatequote' pk=quote.pk %}"><button class="btn btn-warning">Edit Details</button></a>
+            <a style="text-decoration: none; color: white;" href="{% url 'removequote' pk=quote.pk %}"><button class="btn btn-danger">Remove Quote</button></a>
         </div>
     </div>
 </div>
