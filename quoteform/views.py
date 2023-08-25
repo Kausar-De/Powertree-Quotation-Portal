@@ -47,6 +47,14 @@ def logoutUser(request):
 
 @login_required(login_url = 'login')
 def quoteForm(request):
+    pdfpath = str(settings.BASE_DIR) + "/static/pdf"
+
+    retain = ["P1.pdf", "P4.pdf", "P7.pdf", "PowerTreeQuotation.pdf"]
+
+    for i in os.listdir(pdfpath):
+        if i not in retain:
+            os.remove(pdfpath + "/" + i)
+
     form = QuoteForm
     
     if request.method == 'POST':
@@ -77,9 +85,15 @@ def quoteDetail(request, pk):
 
 @login_required(login_url = 'login')
 def renderPDF(request, pk):
-    quote = get_object_or_404(QuoteDetails, pk = pk)
-
     pdfpath = str(settings.BASE_DIR) + "/static/pdf"
+
+    retain = ["P1.pdf", "P4.pdf", "P7.pdf", "PowerTreeQuotation.pdf"]
+
+    for i in os.listdir(pdfpath):
+        if i not in retain:
+            os.remove(pdfpath + "/" + i)
+    
+    quote = get_object_or_404(QuoteDetails, pk = pk)    
 
     #Page 2
     packet = io.BytesIO()
