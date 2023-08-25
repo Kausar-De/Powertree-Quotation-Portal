@@ -12,9 +12,9 @@ class QuoteDetails(models.Model):
     )
 
     MODULES = (
-        ('Mono Bifacial - 330/335/340W', 'Mono Bifacial - 330/335/340W'),
+        ('Mono Bifacial - 535/540/545W', 'Mono Bifacial - 535/540/545W'),
         ('Mono Perc - 535/540/545W', 'Mono Perc - 535/540/545W'),
-        ('Poly Crystalline - 535/540/545W', 'Poly Crystalline - 535/540/545W'),
+        ('Poly Crystalline - 330/335/340W', 'Poly Crystalline - 330/335/340W'),
     )
     
     PANELS = (
