@@ -353,9 +353,7 @@ def thankYou(request):
 
 @login_required(login_url = 'login')
 def showCsv(request):
-    csvpath = str(settings.BASE_DIR) + "/static/csv/ComplaintDatabase.csv"
-    if os.path.exists(csvpath):
-        with open(csvpath, 'rb') as fh:
-            response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
-            response['Content-Disposition'] = 'inline; filename=' + os.path.basename(csvpath)
-            return response
+    csvpath = str(settings.BASE_DIR) + "/static/csv"
+    df = pd.read_csv(csvpath + "/ComplaintDataBase.csv")
+    df.to_html(str(settings.BASE_DIR) + "/quoteform/templates/quoteform/showcsv.html")
+    return render(request, 'quoteform/showcsv.html')
